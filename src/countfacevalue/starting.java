@@ -51,7 +51,7 @@ public class starting extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         countFace = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        viewCamera = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,16 +66,16 @@ public class starting extends javax.swing.JFrame {
         countFace.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         countFace.setText("Count Face");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        viewCamera.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout viewCameraLayout = new javax.swing.GroupLayout(viewCamera);
+        viewCamera.setLayout(viewCameraLayout);
+        viewCameraLayout.setHorizontalGroup(
+            viewCameraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 427, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        viewCameraLayout.setVerticalGroup(
+            viewCameraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 449, Short.MAX_VALUE)
         );
 
@@ -91,7 +91,7 @@ public class starting extends javax.swing.JFrame {
                 .addGap(96, 96, 96))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewCamera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,7 +102,7 @@ public class starting extends javax.swing.JFrame {
                     .addComponent(countFace)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewCamera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -119,17 +119,18 @@ public class starting extends javax.swing.JFrame {
             
             Mat frame = new Mat();
             Mat frame_gray = new Mat();
+            
             Rect[] facesArray;
             Graphics g;
             BufferedImage buff = null;
             
             while(capture.read(frame)){
                 if(frame.empty()){
-                    System.out.println("No Detection");
+                    System.out.println("Ga Ada wajahnya ");
                     break;    
                 }else{
                     try{
-                        g = jPanel1.getGraphics();
+                        g = viewCamera.getGraphics();
                         Imgproc.cvtColor(frame, frame_gray, Imgproc.COLOR_BGR2GRAY);
                         Imgproc.equalizeHist(frame_gray, frame_gray);
                         double w = frame.width();
@@ -152,7 +153,7 @@ public class starting extends javax.swing.JFrame {
                         Imgcodecs.imencode("/bmp", frame, mem);
                         Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
                         buff = (BufferedImage) im;
-                        if(g.drawImage(buff, 0, 0, jPanel1.getWidth(), jPanel1.getHeight(), 0, 0,buff.getWidth(),buff.getHeight(), null)){
+                        if(g.drawImage(buff, 0, 0, viewCamera.getWidth(), viewCamera.getHeight(), 0, 0,buff.getWidth(),buff.getHeight(), null)){
                             
                         }
                     }catch (Exception ex){
@@ -203,6 +204,6 @@ public class starting extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel countFace;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel viewCamera;
     // End of variables declaration//GEN-END:variables
 }
