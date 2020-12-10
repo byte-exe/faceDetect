@@ -33,7 +33,7 @@ public class starting extends javax.swing.JFrame {
     /**
      * Creates new form starting
      */
-    String source = "C:\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt.xml";
+    String source = "C:\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_default.xml";
     CascadeClassifier faceDetector = new CascadeClassifier(source);
     
     public starting() {
@@ -72,11 +72,11 @@ public class starting extends javax.swing.JFrame {
         viewCamera.setLayout(viewCameraLayout);
         viewCameraLayout.setHorizontalGroup(
             viewCameraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         viewCameraLayout.setVerticalGroup(
             viewCameraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -86,9 +86,9 @@ public class starting extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                .addGap(101, 101, 101)
                 .addComponent(countFace)
-                .addGap(96, 96, 96))
+                .addContainerGap(246, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(viewCamera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,9 +98,9 @@ public class starting extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(countFace)
-                    .addComponent(jButton1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(countFace))
                 .addGap(18, 18, 18)
                 .addComponent(viewCamera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -112,7 +112,7 @@ public class starting extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     (new Thread(){
         public void run(){
-            VideoCapture capture = new VideoCapture(0);
+            VideoCapture capture = new VideoCapture(1);
             
             MatOfRect rostros = new MatOfRect();
             MatOfByte mem = new MatOfByte();
@@ -135,7 +135,7 @@ public class starting extends javax.swing.JFrame {
                         Imgproc.equalizeHist(frame_gray, frame_gray);
                         double w = frame.width();
                         double h = frame.height();
-                        faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0|CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h));
+                        faceDetector.detectMultiScale(frame_gray, rostros, 1.1, 2, 0|CASCADE_SCALE_IMAGE, new Size(30, 30), new Size(w, h) );
                         facesArray = rostros.toArray();
                         System.out.println("No of Faces : "+facesArray.length);
                         
@@ -150,7 +150,7 @@ public class starting extends javax.swing.JFrame {
                         int no = facesArray.length;
                         countFace.setText(String.valueOf(no));
                             
-                        Imgcodecs.imencode("/bmp", frame, mem);
+                        Imgcodecs.imencode(".bmp", frame, mem);
                         Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
                         buff = (BufferedImage) im;
                         if(g.drawImage(buff, 0, 0, viewCamera.getWidth(), viewCamera.getHeight(), 0, 0,buff.getWidth(),buff.getHeight(), null)){
